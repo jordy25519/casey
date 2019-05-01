@@ -6,6 +6,8 @@ use proc_macro::{Ident, Span, TokenStream, TokenTree};
 ///
 /// # Example
 /// ```
+/// #![feature(proc_macro_hygiene)]
+///
 /// use casey::upper;
 /// upper!(HelloWorld) // HELLOWORLD
 /// ```
@@ -20,6 +22,8 @@ pub fn upper(input: TokenStream) -> TokenStream {
 ///
 /// # Example
 /// ```
+/// #![feature(proc_macro_hygiene)]
+///
 /// use casey::lower;
 /// lower!(HelloWorld) // helloworld
 /// ```
@@ -35,6 +39,8 @@ pub fn lower(input: TokenStream) -> TokenStream {
 /// e.g. `HelloWorld` -> `hello_world`
 /// # Example
 /// ```
+/// #![feature(proc_macro_hygiene)]
+///
 /// use casey::snake;
 /// snake!(HelloWorld) // hello_world
 /// ```

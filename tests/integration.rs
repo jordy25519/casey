@@ -1,8 +1,6 @@
 #![cfg(test)]
 #![feature(proc_macro_hygiene)]
 
-extern crate casey;
-
 use casey::{lower, snake, upper};
 
 #[test]
