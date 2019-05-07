@@ -11,3 +11,5 @@ repository = "https://github.com/holygits/casey"
 [lib]
 proc-macro = true
 
+[dependencies]
+heck = "0.3.1"

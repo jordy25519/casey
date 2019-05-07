@@ -1,7 +1,7 @@
 #![cfg(test)]
 #![feature(proc_macro_hygiene)]
 
-use casey::{lower, snake, upper};
+use casey::{camel, lower, shouty, snake, upper};
 
 #[test]
 fn it_works_to_uppercase() {
@@ -32,4 +32,23 @@ fn it_works_to_snakecase() {
     assert!(snake!(aBC)());
     assert!(snake!(a_b_c)());
     assert!(snake!(a_bC1)());
+}
+
+#[test]
+fn it_works_to_camelcase() {
+    #[allow(non_snake_case)]
+    fn HelloWorld() -> bool {
+        true
+    }
+
+    assert!(camel!(helloWorld)());
+    assert!(camel!(hello_world)());
+}
+
+#[test]
+fn it_works_to_shoutycase() {
+    const HELLO_WORLD: bool = true;
+
+    assert!(shouty!(helloWorld));
+    assert!(shouty!(hello_world));
 }

@@ -1,49 +1,23 @@
 extern crate proc_macro;
+use heck::{CamelCase, ShoutySnakeCase};
 use proc_macro::{Ident, Span, TokenStream, TokenTree};
 
-///
-/// Expands an input `ident` as uppercase
-///
-/// # Example
-/// ```
-/// #![feature(proc_macro_hygiene)]
-///
-/// use casey::upper;
-/// upper!(HelloWorld) // HELLOWORLD
-/// ```
+/// Expands an input `ident` as UPPERCASE
 #[proc_macro]
 pub fn upper(input: TokenStream) -> TokenStream {
     let ident = Ident::new(&input.to_string().to_uppercase(), Span::call_site());
     TokenStream::from(TokenTree::Ident(ident))
 }
 
-///
 /// Expands an input `ident` as lowercase
-///
-/// # Example
-/// ```
-/// #![feature(proc_macro_hygiene)]
-///
-/// use casey::lower;
-/// lower!(HelloWorld) // helloworld
-/// ```
 #[proc_macro]
 pub fn lower(input: TokenStream) -> TokenStream {
     let ident = Ident::new(&input.to_string().to_lowercase(), Span::call_site());
     TokenStream::from(TokenTree::Ident(ident))
 }
 
-///
-/// Expands an input `ident` as snakecase
-///
+/// Expands an input `ident` as snake_case
 /// e.g. `HelloWorld` -> `hello_world`
-/// # Example
-/// ```
-/// #![feature(proc_macro_hygiene)]
-///
-/// use casey::snake;
-/// snake!(HelloWorld) // hello_world
-/// ```
 #[proc_macro]
 pub fn snake(input: TokenStream) -> TokenStream {
     let raw_ident = &input.to_string();
@@ -59,5 +33,21 @@ pub fn snake(input: TokenStream) -> TokenStream {
         }
     }
     let ident = Ident::new(&s, Span::call_site());
+    TokenStream::from(TokenTree::Ident(ident))
+}
+
+/// Expands an input `ident` as CamelCase
+/// e.g. `helloWorld` -> `HelloWorld`
+#[proc_macro]
+pub fn camel(input: TokenStream) -> TokenStream {
+    let ident = Ident::new(&input.to_string().to_camel_case(), Span::call_site());
+    TokenStream::from(TokenTree::Ident(ident))
+}
+
+/// Expands an input `ident` as SHOUTY_CASE
+/// e.g. `HelloWorld` -> `HELLO_WORLD`
+#[proc_macro]
+pub fn shouty(input: TokenStream) -> TokenStream {
+    let ident = Ident::new(&input.to_string().to_shouty_snake_case(), Span::call_site());
     TokenStream::from(TokenTree::Ident(ident))
 }
