@@ -1,10 +1,13 @@
 # Casey
-[![Build Status](https://travis-ci.org/holygits/casey.svg?branch=master)](https://travis-ci.org/holygits/casey)
+[![Build Status](https://travis-ci.org/holygits/casey.svg?branch=master)](https://travis-ci.org/holygits/casey)  
+
 Case transforming macros
 
 Casey can transform the case of given `ident`s.  
-Niche but maybe useful in other macros.
+Niche but maybe useful in other macros. Requires rust nightly.  
 ```rust
+#![feature(proc_macro_hygiene)]
+
 use casey::{camel, lower, shouty, snake, upper};
 
 lower!(ABC);    // renders: `abc`
