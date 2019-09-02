@@ -13,7 +13,7 @@ use casey::{pascal, lower, shouty, snake, upper};
 lower!(ABC);    // renders: `abc`
 upper!(abc);    // `ABC`
 snake!(ABC);    // `a_b_c`
-pascal!(ab_c);   // `AbC`
+pascal!(ab_c);  // `AbC`
 shouty!(a_b_c); // `A_B_C`
 ```
 
