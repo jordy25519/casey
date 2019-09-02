@@ -1,53 +1,52 @@
+#![feature(pattern)]
 extern crate proc_macro;
-use heck::{CamelCase, ShoutySnakeCase};
+mod traits;
 use proc_macro::{Ident, Span, TokenStream, TokenTree};
+use traits::{PascalCaseExt, ShoutySnakeCaseExt, SnakeCaseExt};
 
-/// Expands an input `ident` as UPPERCASE
-#[proc_macro]
-pub fn upper(input: TokenStream) -> TokenStream {
-    let ident = Ident::new(&input.to_string().to_uppercase(), Span::call_site());
-    TokenStream::from(TokenTree::Ident(ident))
+macro_rules! transform_idents {
+    ($stream:ident, $transform:ident) => {
+        $stream
+            .into_iter()
+            .map(|t| match t {
+                TokenTree::Ident(ident) => {
+                    Ident::new(&ident.to_string().$transform(), Span::call_site()).into()
+                }
+                _ => t,
+            })
+            .collect()
+    };
 }
 
-/// Expands an input `ident` as lowercase
+/// Expands idents in the input stream as UPPERCASE
 #[proc_macro]
-pub fn lower(input: TokenStream) -> TokenStream {
-    let ident = Ident::new(&input.to_string().to_lowercase(), Span::call_site());
-    TokenStream::from(TokenTree::Ident(ident))
+pub fn upper(stream: TokenStream) -> TokenStream {
+    transform_idents!(stream, to_uppercase)
 }
 
-/// Expands an input `ident` as snake_case
+/// Expands idents in the input stream as lowercase
+#[proc_macro]
+pub fn lower(stream: TokenStream) -> TokenStream {
+    transform_idents!(stream, to_lowercase)
+}
+
+/// Expands idents in the input stream as snake_case
 /// e.g. `HelloWorld` -> `hello_world`
 #[proc_macro]
-pub fn snake(input: TokenStream) -> TokenStream {
-    let raw_ident = &input.to_string();
-    let mut s = String::new();
-    for (i, c) in raw_ident.chars().enumerate() {
-        if c.is_uppercase() || c.is_numeric() {
-            if i > 0 {
-                s.push('_');
-            }
-            s.push(c.to_lowercase().to_string().chars().next().unwrap());
-        } else {
-            s.push(c)
-        }
-    }
-    let ident = Ident::new(&s, Span::call_site());
-    TokenStream::from(TokenTree::Ident(ident))
+pub fn snake(stream: TokenStream) -> TokenStream {
+    transform_idents!(stream, to_snake_case)
 }
 
-/// Expands an input `ident` as CamelCase
+/// Expands idents in the input stream as PascalCase
 /// e.g. `helloWorld` -> `HelloWorld`
 #[proc_macro]
-pub fn camel(input: TokenStream) -> TokenStream {
-    let ident = Ident::new(&input.to_string().to_camel_case(), Span::call_site());
-    TokenStream::from(TokenTree::Ident(ident))
+pub fn pascal(stream: TokenStream) -> TokenStream {
+    transform_idents!(stream, to_pascal_case)
 }
 
-/// Expands an input `ident` as SHOUTY_CASE
+/// Expands idents in the input stream as SHOUTY_CASE
 /// e.g. `HelloWorld` -> `HELLO_WORLD`
 #[proc_macro]
-pub fn shouty(input: TokenStream) -> TokenStream {
-    let ident = Ident::new(&input.to_string().to_shouty_snake_case(), Span::call_site());
-    TokenStream::from(TokenTree::Ident(ident))
+pub fn shouty(stream: TokenStream) -> TokenStream {
+    transform_idents!(stream, to_shouty_snake_case)
 }

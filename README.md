@@ -3,16 +3,29 @@
 
 Case transforming macros
 
-Casey can transform the case of given `ident`s.  
+Casey transforms the case of given input `ident`s.  
 Niche but maybe useful in other macros. Requires rust nightly.  
 ```rust
 #![feature(proc_macro_hygiene)]
 
-use casey::{camel, lower, shouty, snake, upper};
+use casey::{pascal, lower, shouty, snake, upper};
 
 lower!(ABC);    // renders: `abc`
-upper!(abc);    // renders: `ABC`
-snake!(ABC);    // renders: `a_b_c`
-camel!(ab_c);   // renders: `AbC`
-shouty!(a_b_c); // renders: `A_B_C`
+upper!(abc);    // `ABC`
+snake!(ABC);    // `a_b_c`
+pascal!(ab_c);   // `AbC`
+shouty!(a_b_c); // `A_B_C`
 ```
+
+## Token Stream
+Casey macros can operate on `TokenStream`s e.g.  
+```rust
+    snake!(
+        struct MockStruct {}
+        impl MockStruct {
+            fn test() -> bool { true }
+        }
+    );
+    assert!(mock_struct::test());
+```
+All `ident` tokens in the stream will have the case transformation applied.  
