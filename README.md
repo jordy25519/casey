@@ -4,10 +4,8 @@
 Case transforming macros
 
 Casey transforms the case of given input `ident`s.  
-Niche but maybe useful in other macros. Requires rust nightly.  
+Niche but maybe useful in other macros.  
 ```rust
-#![feature(proc_macro_hygiene)]
-
 use casey::{pascal, lower, shouty, snake, upper};
 
 lower!(ABC);    // renders: `abc`

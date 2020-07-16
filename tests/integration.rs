@@ -1,5 +1,4 @@
 #![cfg(test)]
-#![feature(proc_macro_hygiene)]
 
 use casey::{lower, pascal, shouty, snake, upper};
 

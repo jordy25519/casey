@@ -1,9 +1,8 @@
 //!
 //! String case transformation extension traits
 //!
-use core::str::pattern::Pattern;
 
-/// Word boundary SEPARATORS
+/// Word boundary separators
 const SEPARATORS: &'static str = "-_";
 
 pub trait PascalCaseExt {
@@ -18,7 +17,7 @@ impl PascalCaseExt for String {
         }
         let mut follows_separator = false;
         for c in self.chars().skip(1).into_iter() {
-            if c.is_contained_in(SEPARATORS) {
+            if SEPARATORS.contains(c) {
                 follows_separator = true;
                 continue;
             }
@@ -48,7 +47,7 @@ impl SnakeCaseExt for String {
                 s.push(c)
             } else {
                 s.push('_');
-                if c.is_contained_in(SEPARATORS) {
+                if SEPARATORS.contains(c) {
                     continue;
                 } else {
                     s.push(c.to_lowercase().next().unwrap())
@@ -74,7 +73,7 @@ impl ShoutySnakeCaseExt for String {
                 s.push('_');
                 s.push(c)
             } else {
-                if c.is_contained_in(SEPARATORS) {
+                if SEPARATORS.contains(c) {
                     s.push('_');
                     continue;
                 }

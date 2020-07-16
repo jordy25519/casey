@@ -1,5 +1,3 @@
-#![feature(pattern)]
-extern crate proc_macro;
 mod traits;
 use proc_macro::{Ident, Span, TokenStream, TokenTree};
 use traits::{PascalCaseExt, ShoutySnakeCaseExt, SnakeCaseExt};
