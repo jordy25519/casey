@@ -12,20 +12,38 @@ pub trait PascalCaseExt {
 impl PascalCaseExt for String {
     fn to_pascal_case(&self) -> String {
         let mut s = String::new();
-        if let Some(c) = self.chars().nth(0) {
-            s.push(c.to_uppercase().next().unwrap());
-        }
-        let mut follows_separator = false;
-        for c in self.chars().skip(1).into_iter() {
-            if SEPARATORS.contains(c) {
-                follows_separator = true;
+        let mut capitalise_next = true; // always on first char
+
+        let mut char_stream = self.chars().into_iter().peekable();
+        while let Some(current_char) = char_stream.next() {
+            if SEPARATORS.contains(current_char) | current_char.is_numeric() {
+                capitalise_next = true;
                 continue;
             }
-            if follows_separator {
-                s.push(c.to_uppercase().next().unwrap());
-                follows_separator = false;
+
+            if capitalise_next {
+                s.push(current_char.to_uppercase().next().unwrap());
+                capitalise_next = false;
+                continue;
+            }
+
+            let next_char = char_stream.peek();
+            if next_char.is_none() {
+                // `current_char` is last in the stream
+                s.push(current_char.to_lowercase().next().unwrap());
+                break;
+            }
+
+            // lowercase this char if followed by another uppercase or punctuation
+            // e.g. AA => aA, A- => a-
+            // has the affect of transforming: 'ABCDe' into 'AbcDe'
+            if current_char.is_ascii_uppercase()
+                && (next_char.unwrap().is_ascii_uppercase()
+                    || next_char.unwrap().is_ascii_punctuation())
+            {
+                s.push(current_char.to_lowercase().next().unwrap());
             } else {
-                s.push(c);
+                s.push(current_char);
             }
         }
         s
