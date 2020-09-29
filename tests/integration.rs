@@ -42,6 +42,7 @@ fn it_works_to_pascalcase() {
 
     assert!(pascal!(helloWorld)());
     assert!(pascal!(hello_world)());
+    assert!(pascal!(HELLO_WORLD)());
 }
 
 #[test]
@@ -50,6 +51,7 @@ fn it_works_to_shoutycase() {
 
     assert!(shouty!(helloWorld));
     assert!(shouty!(hello_world));
+    assert!(shouty!(HelloWorld));
 }
 
 mod abc {
