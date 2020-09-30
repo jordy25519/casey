@@ -7,8 +7,13 @@ macro_rules! transform_idents {
         $stream
             .into_iter()
             .map(|t| match t {
-                TokenTree::Ident(ident) => {
-                    Ident::new(&ident.to_string().$transform(), Span::call_site()).into()
+                TokenTree::Ident(ref ident) => {
+                    let is_keyword = syn::parse_str::<syn::Ident>(&ident.to_string()).is_err();
+                    if is_keyword {
+                        t
+                    } else {
+                        Ident::new(&ident.to_string().$transform(), Span::call_site()).into()
+                    }
                 }
                 _ => t,
             })
