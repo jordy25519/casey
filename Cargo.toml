@@ -8,5 +8,8 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/holygits/casey"
 
+[dependencies]
+syn = "1.0"
+
 [lib]
 proc-macro = true

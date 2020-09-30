@@ -94,4 +94,20 @@ fn declare_struct() {
         }
     );
     assert!(mockstruct::test());
+
+    upper!(
+        struct MockStruct {}
+        impl MockStruct {
+            fn test() -> bool { true }
+        }
+    );
+    assert!(MOCKSTRUCT::test());
+
+    pascal!(
+        struct MOCK_STRUCT {}
+        impl MOCK_STRUCT {
+            fn test() -> bool { true }
+        }
+    );
+    assert!(MockStruct::test());
 }
