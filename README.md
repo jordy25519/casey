@@ -26,4 +26,4 @@ Casey macros can operate on `TokenStream`s e.g.
     );
     assert!(mock_struct::test());
 ```
-All `ident` tokens in the stream will have the case transformation applied.  
+All `ident` tokens in the stream will have the case transformation applied (keywords will be ignored).  

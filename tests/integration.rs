@@ -76,9 +76,6 @@ fn macro_args() {
 
 #[test]
 fn declare_struct() {
-    // Gotcha here is that syntactic tokens are idents as well e.g. `fn`, `impl`, `struct`
-    // This means only transformation which produce valid idents will produce valid rust
-    // e.g. `upper!(struct) => STRUCT` is invalid...
     snake!(
         struct MockStruct {}
         impl MockStruct {
