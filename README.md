@@ -28,8 +28,8 @@ Casey macros can operate on `TokenStream`s e.g.
 ```
 All `ident` tokens in the stream will have the case transformation applied (keywords will be ignored).  
 
-## Gotchas
-Type names, including built-in types are not valid identifiers e.g. `bool`, `usize`, `i32` etc. and **will** be transformed by casey.  
+### Gotchas
+Type names, including built-in types are not considered keywords e.g. `bool`, `usize`, `i32` etc. and **will** be transformed by casey.  
 ```rust
 pascal!(let test: bool = true); // renders: `let Test: Bool = true;`
 ```

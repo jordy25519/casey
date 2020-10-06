@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.3.3] - 2020-06-10
+
 ### Fixed
 Apply ident transformation to TokenTree::Groups
 
