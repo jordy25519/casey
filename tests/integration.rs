@@ -67,10 +67,8 @@ fn it_works_with_mod() {
 
 #[test]
 fn macro_args() {
-    #[allow(non_snake_case)]
-    let A = "hello";
-    #[allow(non_snake_case)]
-    let B = "world";
+    let a = "hello";
+    let b = "world";
     lower!(println!("{} {}", A, B));
 }
 
@@ -87,24 +85,27 @@ fn declare_struct() {
     lower!(
         struct MockStruct {}
         impl MockStruct {
-            fn test() -> bool { true }
+            fn Test() -> bool { true }
         }
     );
     assert!(mockstruct::test());
 
+    // type names will be affected by the case change
+    type BOOL = bool;
     upper!(
         struct MockStruct {}
         impl MockStruct {
-            fn test() -> bool { true }
+            fn Test() -> bool { true }
         }
     );
-    assert!(MOCKSTRUCT::test());
+    assert!(MOCKSTRUCT::TEST());
 
+    // type names will be affected by the case change
+    type Bool = bool;
     pascal!(
-        struct MOCK_STRUCT {}
-        impl MOCK_STRUCT {
-            fn test() -> bool { true }
-        }
-    );
-    assert!(MockStruct::test());
+    struct MOCK_STRUCT {}
+    impl MOCK_STRUCT {
+        fn TEST() -> bool { true }
+    });
+    assert!(MockStruct::Test());
 }
