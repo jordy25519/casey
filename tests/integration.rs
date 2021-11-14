@@ -34,6 +34,24 @@ fn it_works_to_snakecase() {
 }
 
 #[test]
+fn it_works_to_snakecase_mixed() {
+    fn hello_world() -> bool {
+        true
+    }
+    fn hello_world_and_welcome() -> bool {
+        true
+    }
+    assert!(snake!(hello_world)());
+    assert!(snake!(hello_World)());
+    assert!(snake!(helloWorld)());
+    assert!(snake!(HelloWorld)());
+    assert!(snake!(hello_world_and_welcome)());
+    assert!(snake!(hello_world_andWelcome)());
+    assert!(snake!(hello_worldAndWelcome)());
+    assert!(snake!(hello_world_AndWelcome)());
+}
+
+#[test]
 fn it_works_to_pascalcase() {
     #[allow(non_snake_case)]
     fn HelloWorld() -> bool {
