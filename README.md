@@ -1,7 +1,8 @@
 # Casey
 
-[![Build](https://github.com/holygits/casey/actions/workflows/build.yml/badge.svg)](https://github.com/holygits/casey/actions/workflows/build.yml)
-Case transforming macros
+[![Build](https://github.com/holygits/casey/actions/workflows/build.yml/badge.svg)](https://github.com/holygits/casey/actions/workflows/build.yml)  
+
+Case transforming macros  
 
 Casey transforms the case of given input `ident`s.  
 Niche but maybe useful in other macros.  
