@@ -1,6 +1,14 @@
 name: Build
 
 on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.rs"
+      - "**.toml"
+      - "**.lock"
+      - ".github/workflows/*.yml"
   pull_request:
     branches:
       - master
