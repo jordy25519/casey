@@ -1,6 +1,6 @@
 # Casey
-[![Build Status](https://travis-ci.org/holygits/casey.svg?branch=master)](https://travis-ci.org/holygits/casey)  
 
+[![Build](https://github.com/holygits/casey/actions/workflows/build.yml/badge.svg)](https://github.com/holygits/casey/actions/workflows/build.yml)
 Case transforming macros
 
 Casey transforms the case of given input `ident`s.  
