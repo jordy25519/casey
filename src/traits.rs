@@ -57,15 +57,21 @@ pub trait SnakeCaseExt {
 impl SnakeCaseExt for String {
     fn to_snake_case(&self) -> String {
         let mut s = String::new();
+        let mut was_sep = false;
         if let Some(c) = self.chars().nth(0) {
+            was_sep = SEPARATORS.contains(c);
             s.push(c.to_lowercase().next().unwrap());
         }
         for c in self.chars().skip(1).into_iter() {
             if c.is_lowercase() {
-                s.push(c)
+                was_sep = false;
+                s.push(c);
             } else {
-                s.push('_');
-                if SEPARATORS.contains(c) {
+                if !was_sep {
+                    s.push('_');
+                }
+                was_sep = SEPARATORS.contains(c);
+                if was_sep {
                     continue;
                 } else {
                     s.push(c.to_lowercase().next().unwrap())
