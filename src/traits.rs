@@ -3,7 +3,7 @@
 //!
 
 /// Word boundary separators
-const SEPARATORS: &'static str = "-_";
+const SEPARATORS: &str = "-_";
 
 pub trait PascalCaseExt {
     fn to_pascal_case(&self) -> String;
@@ -14,7 +14,7 @@ impl PascalCaseExt for String {
         let mut s = String::new();
         let mut capitalise_next = true; // always on first char
 
-        let mut char_stream = self.chars().into_iter().peekable();
+        let mut char_stream = self.chars().peekable();
         while let Some(current_char) = char_stream.next() {
             if SEPARATORS.contains(current_char) | current_char.is_numeric() {
                 capitalise_next = true;
@@ -58,11 +58,11 @@ impl SnakeCaseExt for String {
     fn to_snake_case(&self) -> String {
         let mut s = String::new();
         let mut was_sep = false;
-        if let Some(c) = self.chars().nth(0) {
+        if let Some(c) = self.chars().next() {
             was_sep = SEPARATORS.contains(c);
             s.push(c.to_lowercase().next().unwrap());
         }
-        for c in self.chars().skip(1).into_iter() {
+        for c in self.chars().skip(1) {
             if c.is_lowercase() {
                 was_sep = false;
                 s.push(c);
@@ -89,10 +89,10 @@ pub trait ShoutySnakeCaseExt {
 impl ShoutySnakeCaseExt for String {
     fn to_shouty_snake_case(&self) -> String {
         let mut s = String::new();
-        if let Some(c) = self.chars().nth(0) {
+        if let Some(c) = self.chars().next() {
             s.push(c.to_uppercase().next().unwrap());
         }
-        for c in self.chars().skip(1).into_iter() {
+        for c in self.chars().skip(1) {
             if c.is_uppercase() {
                 s.push('_');
                 s.push(c)
