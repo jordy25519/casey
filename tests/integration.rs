@@ -127,3 +127,27 @@ fn declare_struct() {
     });
     assert!(MockStruct::Test());
 }
+
+#[test]
+fn skip_attribute_keywords() {
+    macro_rules! test {
+        ($($name:ident),*) => {
+            casey::pascal!(
+                #[repr(usize)]
+                #[derive(PartialEq, Debug, Copy, Clone)]
+                pub enum Test {
+                    $($name,)*
+                }
+            );
+        }
+    }
+
+    test! {
+        one,
+        two,
+        three
+    }
+
+    assert!(Test::One == Test::One);
+    let _ = Test::One.clone();
+}
