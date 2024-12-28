@@ -61,6 +61,20 @@ fn it_works_to_pascalcase() {
     assert!(pascal!(helloWorld)());
     assert!(pascal!(hello_world)());
     assert!(pascal!(HELLO_WORLD)());
+
+    #[allow(non_snake_case)]
+    fn Test2() -> bool {
+        true
+    }
+    assert!(pascal!(TEST2)());
+
+    #[allow(non_snake_case)]
+    fn One2Three() -> bool {
+        true
+    }
+    assert!(pascal!(ONE2THREE)());
+    assert!(pascal!(ONE_2_THREE)());
+    assert!(pascal!(onE_2_tHREE)());
 }
 
 #[test]
