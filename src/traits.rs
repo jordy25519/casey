@@ -16,8 +16,20 @@ impl PascalCaseExt for String {
 
         let mut char_stream = self.chars().peekable();
         while let Some(current_char) = char_stream.next() {
-            if SEPARATORS.contains(current_char) | current_char.is_numeric() {
+            let next_char = char_stream.peek();
+            if next_char.is_none() {
+                // `current_char` is last in the stream
+                s.push(current_char.to_lowercase().next().unwrap());
+                break;
+            }
+
+            if SEPARATORS.contains(current_char) {
                 capitalise_next = true;
+                continue;
+            }
+            if current_char.is_numeric() {
+                capitalise_next = true;
+                s.push(current_char);
                 continue;
             }
 
@@ -27,19 +39,12 @@ impl PascalCaseExt for String {
                 continue;
             }
 
-            let next_char = char_stream.peek();
-            if next_char.is_none() {
-                // `current_char` is last in the stream
-                s.push(current_char.to_lowercase().next().unwrap());
-                break;
-            }
-
             // lowercase this char if followed by another uppercase or punctuation
             // e.g. AA => aA, A- => a-
             // has the affect of transforming: 'ABCDe' into 'AbcDe'
             if current_char.is_ascii_uppercase()
-                && (next_char.unwrap().is_ascii_uppercase()
-                    || next_char.unwrap().is_ascii_punctuation())
+                && next_char
+                    .is_some_and(|x| x.is_numeric() || x.is_uppercase() || x.is_ascii_punctuation())
             {
                 s.push(current_char.to_lowercase().next().unwrap());
             } else {

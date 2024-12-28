@@ -1,6 +1,6 @@
 # Casey
 
-[![Build](https://github.com/holygits/casey/actions/workflows/build.yml/badge.svg)](https://github.com/holygits/casey/actions/workflows/build.yml)  
+[![Build](https://github.com/jordy25519/casey/actions/workflows/build.yml/badge.svg)](https://github.com/jordy25519/casey/actions/workflows/build.yml)  
 
 Case transforming macros  
 
